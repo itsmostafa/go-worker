@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
@@ -13,10 +14,11 @@ type Worker struct {
 }
 
 // send a single email
-func sendEmail(t string) {
+func sendEmail(ctx context.Context, t string) {
 	log.Println("Sending Email for: ", t)
-	time.Sleep(5 * time.Second)
+	time.Sleep(10 * time.Second)
 	log.Printf("%s Email Sent!", t)
+	<-ctx.Done()
 }
 
 // process tasks every t seconds for all tasks in numtasks
@@ -26,8 +28,12 @@ func processTasks(t time.Time, numtasks int) error {
 		tasks = append(tasks, fmt.Sprintf("Subscription %d", i))
 	}
 
+	// create a new context with timeout of 5 seconds
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
 	for _, task := range tasks {
-		go sendEmail(task)
+		go sendEmail(ctx, task)
 	}
 	return nil
 }

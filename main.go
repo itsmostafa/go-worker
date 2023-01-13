@@ -44,8 +44,13 @@ func sendEmail(t string) {
 }
 
 func main() {
+	// Initialize a worker with poll every second and execute 10 tasks
 	w := Worker{duration: 1, numtasks: 10}
+
+	// Start worker in the background
 	go w.Start()
+
+	// Stop the worker by pressing any key
 	fmt.Println("Press any key to stop the worker")
 	var input string
 	fmt.Scanln(&input)

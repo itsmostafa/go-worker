@@ -1,2 +1,3 @@
 # Go Worker
-## Send scheduled emails
+
+Periodically send scheduled emails at scale

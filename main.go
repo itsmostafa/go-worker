@@ -12,16 +12,10 @@ type Worker struct {
 	numtasks int
 }
 
-// Start the worker
-func (w *Worker) Start() {
-	log.Println("Background Worker Started Successfully - Waiting for Tasks")
-	for t := range time.Tick(time.Duration(w.duration) * time.Second) {
-		err := processTasks(t, w.numtasks)
-		if err != nil {
-			log.Fatal(err)
-			continue
-		}
-	}
+// send a single email
+func sendEmail(t string) {
+	time.Sleep(5 * time.Second)
+	log.Println("Sending Notification Email for: ", t)
 }
 
 // process tasks every t seconds for all tasks in numtasks
@@ -37,10 +31,16 @@ func processTasks(t time.Time, numtasks int) error {
 	return nil
 }
 
-// send a single email
-func sendEmail(t string) {
-	time.Sleep(5 * time.Second)
-	log.Println("Sending Notification Email for: ", t)
+// Start the worker
+func (w *Worker) Start() {
+	log.Println("Background Worker Started Successfully - Waiting for Tasks")
+	for t := range time.Tick(time.Duration(w.duration) * time.Second) {
+		err := processTasks(t, w.numtasks)
+		if err != nil {
+			log.Fatal(err)
+			continue
+		}
+	}
 }
 
 func main() {

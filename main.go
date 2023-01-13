@@ -14,8 +14,9 @@ type Worker struct {
 
 // send a single email
 func sendEmail(t string) {
+	log.Println("Sending Email for: ", t)
 	time.Sleep(5 * time.Second)
-	log.Println("Sending Notification Email for: ", t)
+	log.Printf("%s Email Sent!", t)
 }
 
 // process tasks every t seconds for all tasks in numtasks
@@ -35,6 +36,7 @@ func processTasks(t time.Time, numtasks int) error {
 func (w *Worker) Start() {
 	log.Println("Background Worker Started Successfully - Waiting for Tasks")
 	for t := range time.Tick(time.Duration(w.duration) * time.Second) {
+		log.Printf("Polling database... found %d emails to send", w.numtasks)
 		err := processTasks(t, w.numtasks)
 		if err != nil {
 			log.Fatal(err)

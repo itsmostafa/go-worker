@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"runtime"
 	"time"
 )
 
@@ -48,6 +49,7 @@ func (w *Worker) Start() {
 			log.Fatal(err)
 			continue
 		}
+		fmt.Println("Number of Goroutines: ", runtime.NumGoroutine())
 	}
 }
 

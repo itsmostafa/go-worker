@@ -18,15 +18,6 @@ type Worker struct {
 // send a single email
 func sendEmail(ctx context.Context, t string, complete chan<- bool) {
 	log.Println("Sending Email for: ", t)
-	// email := aws.Email{
-	// 	Sender:    "test@inltesting.xyz",
-	// 	Recipient: "abdelbaky.mostafa@gmail.com",
-	// 	Subject:   "Con-PCA Subscription Started",
-	// 	HtmlBody:  "<h1>test</h1><br><p>Hello this is a test from my golang app</p>",
-	// 	TextBody:  "test",
-	// 	CharSet:   "UTF-8",
-	// }
-	// email.Send()
 	time.Sleep(5 * time.Second)
 	log.Println("Email Sent Successfully")
 	complete <- true
@@ -62,20 +53,9 @@ func (w *Worker) Start() {
 
 func main() {
 	// // Initialize a worker with poll every second and execute 10 tasks
-	// w := Worker{duration: 1, numtasks: 10}
-
-	// // Start worker in the background
-	// go w.Start()
-
-	// // Stop the worker by pressing any key
-	// fmt.Println("Press any key to stop the worker")
-	// var input string
-	// fmt.Scanln(&input)
-	// fmt.Println("Stopping the worker")
-	// os.Exit(0)
 	email := aws.SESEmail{
-		From:        "test@inltesting.xyz",
-		To:          "abdelbaky.mostafa@gmail.com",
+		From:        "test@testing.xyz",
+		To:          "test@gmail.com",
 		Subject:     "test",
 		CC:          "test@inltesting.xyz",
 		HtmlBody:    "<h1>test</h1><br><p>Hello this is a test from my golang app</p>",
